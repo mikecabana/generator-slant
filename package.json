@@ -1,0 +1,36 @@
+{
+  "name": "generator-slant",
+  "version": "0.0.1",
+  "description": "An Angular 6+ module generator for a moduled development approach",
+  "files": [
+    "generators"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "angular",
+    "moduled",
+    "scaffold",
+    "slant",
+    "ng",
+    "ng-cli",
+    "generator",
+    "module"
+  ],
+  "author": "Michael Cabana",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "yeoman-generator": "^3.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikecabana/generator-slant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mikecabana/generator-slant/issues"
+  },
+  "homepage": "https://github.com/mikecabana/generator-slant#README"
+}
