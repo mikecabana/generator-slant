@@ -1,6 +1,6 @@
 {
   "name": "generator-slant",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An Angular 6+ module generator for a moduled development approach",
   "files": [
     "generators"
