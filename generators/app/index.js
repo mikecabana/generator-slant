@@ -43,9 +43,6 @@ module.exports = class extends Generator {
 
     configuring() {
 
-        // this.args.alias = `@portal/${this.answers.moduleName}`;
-        // this.args.aliasstar = `@portal/${this.answers.moduleName}/*`;
-
         const alias = `@portal/${this.answers.moduleName}`;
         const aliasstar = `@portal/${this.answers.moduleName}/*`;
 
