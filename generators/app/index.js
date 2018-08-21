@@ -41,7 +41,32 @@ module.exports = class extends Generator {
         ]);
     }
 
-    // configuring() { }
+    configuring() {
+        const alias = `@portal/${this.answers.moduleName}`;
+        const aliasstar = `@portal/${this.answers.moduleName}/*`;
+
+        const content = {
+            'compilerOptions': {
+                'paths': {
+                    alias: [`./app/${this.answers.moduleName}/view/${this.answers.moduleName}-view.module`],
+                    aliasstar: [`./app/${this.answers.moduleName}/*`]
+                }
+            }
+        };
+        const content2 = {
+            'compilerOptions': {
+                'paths': {
+                    alias: [`./src/app/${this.answers.moduleName}/view/${this.answers.moduleName}-view.module`],
+                    aliasstar: [`./src/app/${this.answers.moduleName}/*`]
+                }
+            }
+        };
+
+        if (this.answers.moduleType === 'feature') {
+            this.fs.extendJSON('src/tsconfig.app.json', content);
+            this.fs.extendJSON('tsconfig.app.json', content2);
+        }
+    }
 
     // default() { }
 
