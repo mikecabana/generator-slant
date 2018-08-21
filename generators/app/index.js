@@ -90,11 +90,11 @@ module.exports = class extends Generator {
         }
         if (this.answers.moduleType === 'feature') {
             this.spawnCommandSync('ng', ['g', 'm', `${this.answers.moduleName}/dal/${this.answers.moduleName}-dal`, '--flat']);
-            this.spawnCommandSync('ng', ['g', 'm', `${this.answers.moduleName}/view/${this.answers.moduleName}-view`, '--flat']);
+            this.spawnCommandSync('ng', ['g', 'm', `${this.answers.moduleName}/view/${this.answers.moduleName}-view`, '--flat', '--routing']);
         }
     }
 
     end() {
-        this.log(Chalk.bold.magenta('Donezo!'));
+        this.log(Chalk.bold.magenta('Done!'));
     }
 };
