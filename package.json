@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.1",
-    "yeoman-generator": "^3.1.1"
+    "yeoman-generator": "^3.2.0"
   },
   "repository": {
     "type": "git",
