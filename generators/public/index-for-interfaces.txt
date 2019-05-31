@@ -1,0 +1,3 @@
+// you can export all your typescript interfaces here
+// i.e.
+// export * from './i-sample.interface';

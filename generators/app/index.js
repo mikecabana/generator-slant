@@ -11,26 +11,37 @@ module.exports = class extends Generator {
     }
 
     initializing() {
-        this.log(Chalk.bold.magenta('Slanting!'));
+        this.log(Chalk.bold.magenta('Slant: 🗨 Answer some questions to help us generate your module.'));
     }
 
     async prompting() {
         this.answers = await this.prompt([
             {
-                type: 'list',
-                name: 'moduleType',
-                message: 'What type of module do you need?',
-                choices: ['blank', 'service', 'feature'],
-                default: 0
+                type: 'confirm',
+                name: 'moduleWithHttpClients',
+                message: 'Will your module have any HTTP client services?',
+                default: 1
+            },
+            {
+                type: 'confirm',
+                name: 'moduleWithModels',
+                message: 'Will you be creating new models, classes or interfaces?',
+                default: 1
+            },
+            {
+                type: 'confirm',
+                name: 'moduleWithComponents',
+                message: 'Will this module be providing new pages or components?',
+                default: 1
             },
             {
                 when: (response) => {
-                    return response.moduleType === 'service'
+                    return response.moduleWithComponents;
                 },
                 type: 'confirm',
-                name: 'httpModule',
-                message: 'Will this be a data access module?',
-                default: 0
+                name: 'moduleWithRouting',
+                message: 'Do you need routing?',
+                default: 1
             },
             {
                 type: 'input',
@@ -63,40 +74,46 @@ module.exports = class extends Generator {
             }
         };
 
-        if (this.answers.moduleType === 'feature') {
-            this.fs.extendJSON('src/tsconfig.app.json', content);
-            this.fs.extendJSON('tsconfig.json', content2);
-        }
+        this.fs.extendJSON('src/tsconfig.app.json', content);
+        this.fs.extendJSON('tsconfig.json', content2);
     }
 
-    // default() { }
+    default() { 
+        
+        this.log(Chalk.bold.magenta('Slant: ⚡ Generating module.'));
+    }
 
     writing() {
-        if (this.answers.moduleType === 'service') {
-            if (this.answers.httpModule) {
-                this.fs.copy(
-                    this.templatePath('../../public/index-t.txt'),
-                    this.destinationPath(`src/app/${this.answers.moduleName}/abstraction/index.ts`),
-                );
-            } else {
-                this.fs.copy(
-                    this.templatePath('../../public/index-t.txt'),
-                    this.destinationPath(`src/app/${this.answers.moduleName}/services/index.ts`),
-                );
-            }
-        }
-        if (this.answers.moduleType === 'feature') {
+
+        if (this.answers.moduleWithHttpClients) {
             this.fs.copy(
-                this.templatePath('../../public/index-t.txt'),
-                this.destinationPath(`src/app/${this.answers.moduleName}/abstraction/index.ts`),
+                this.templatePath('../../public/index-for-http.txt'),
+                this.destinationPath(`src/app/${this.answers.moduleName}/http/index.ts`),
+            );
+        }
+        if (this.answers.moduleWithModels) {
+            this.fs.copy(
+                this.templatePath('../../public/index-for-models.txt'),
+                this.destinationPath(`src/app/${this.answers.moduleName}/models/index.ts`),
             );
             this.fs.copy(
-                this.templatePath('../../public/index-t.txt'),
+                this.templatePath('../../public/index-for-interfaces.txt'),
+                this.destinationPath(`src/app/${this.answers.moduleName}/models/interfaces/index.ts`),
+            );
+        }
+
+        if (this.answers.moduleWithComponents) {
+            this.fs.copy(
+                this.templatePath('../../public/index-for-components.txt'),
                 this.destinationPath(`src/app/${this.answers.moduleName}/view/components/index.ts`),
             );
             this.fs.copy(
-                this.templatePath('../../public/index-t.txt'),
+                this.templatePath('../../public/index-for-component-pages.txt'),
                 this.destinationPath(`src/app/${this.answers.moduleName}/view/pages/index.ts`),
+            );
+            this.fs.copy(
+                this.templatePath('../../public/index-for-component-contexts.txt'),
+                this.destinationPath(`src/app/${this.answers.moduleName}/view/context/index.ts`),
             );
         }
     }
@@ -104,23 +121,16 @@ module.exports = class extends Generator {
     // conflicts() { }
 
     install() {
-        if (this.answers.moduleType === 'blank') {
-            this.spawnCommandSync('ng', ['g', 'm', this.answers.moduleName]);
-        }
-        if (this.answers.moduleType === 'service') {
-            if (this.answers.httpModule) {
-                this.spawnCommandSync('ng', ['g', 'm', `${this.answers.moduleName}/dal/${this.answers.moduleName}-dal`, '--flat']);
-            } else {
-                this.spawnCommandSync('ng', ['g', 'm', `${this.answers.moduleName}/${this.answers.moduleName}`, '--flat']);
-            }
-        }
-        if (this.answers.moduleType === 'feature') {
-            this.spawnCommandSync('ng', ['g', 'm', `${this.answers.moduleName}/dal/${this.answers.moduleName}-dal`, '--flat']);
+        if (this.answers.moduleWithComponents && this.answers.moduleWithRouting) {
             this.spawnCommandSync('ng', ['g', 'm', `${this.answers.moduleName}/view/${this.answers.moduleName}-view`, '--flat', '--routing']);
+        }
+
+        if (this.answers.moduleWithComponents && !this.answers.moduleWithRouting) {
+            this.spawnCommandSync('ng', ['g', 'm', `${this.answers.moduleName}/view/${this.answers.moduleName}-view`, '--flat']);
         }
     }
 
     end() {
-        this.log(Chalk.bold.magenta('Done!'));
+        this.log(Chalk.bold.magenta('Slant: ✔ Done!'));
     }
 };
