@@ -4,7 +4,7 @@
 
 ## Usage
 
-### Angular 6+
+### Angular 7+
 
 To run this generator, first you need an `@angular/cli` generated project.
 
