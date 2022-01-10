@@ -1,10 +1,10 @@
-# Angular 7+ Module Generator
+# Angular Module Generator
 
-> This [Yeoman](https://yeoman.io) generator lets you quickly generate a new module for an Angular CLI Project in a moduled approach.
+> This [Yeoman](https://yeoman.io) generator lets you quickly generate a new module for an Angular CLI Project in an opinionated module breakdown.
 
 ## Usage
 
-### Angular 7+
+### Angular
 
 To run this generator, first you need an `@angular/cli` generated project.
 
@@ -14,7 +14,7 @@ Install the `@angular/cli` by running
 npm i -g @angular/cli
 ```
 
-then by generating a new project
+If you don't have an Angular project generate one.
 
 ```terminal
 ng new my-fancy-project
@@ -30,7 +30,7 @@ Install `yo` and `generator-slant` globally by running
 npm i -g yo generator-slant
 ```
 
-The from the root of your angular project run
+Then from the root of your Angular project run
 
 ```terminal
 yo slant
